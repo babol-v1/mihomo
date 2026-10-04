@@ -1257,11 +1257,11 @@ listeners:
     port: 2886
     users:
       - username: phone
-        uuid: 021f6971-73c9-4e06-858c-44546aab8beb
-        flow: xtls-rprx-vision
+        uuid: 
+        flow: 
     reality-config:
       dest: www.microsoft.com:443
-      private-key: qMaJ_WOx4FkaF0j76WPkADoBgFgpO3SS1SpySf8qm3M
+      private-key: 
       short-id:
         - f7ca97a564130b54
       server-names:
