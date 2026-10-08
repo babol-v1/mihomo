@@ -1,1 +1,17 @@
-
+# NAME: quad9DNS
+payload:
+  - DOMAIN,dns.quad9.net
+  - DOMAIN,dns11.quad9.net
+  - DOMAIN,dns10.quad9.net
+  - IP-CIDR,9.9.9.9/32,no-resolve
+  - IP-CIDR,149.112.112.112/32,no-resolve
+  - IP-CIDR,9.9.9.11/32,no-resolve
+  - IP-CIDR,149.112.112.11/32,no-resolve
+  - IP-CIDR,9.9.9.10/32,no-resolve
+  - IP-CIDR,149.112.112.10/32,no-resolve
+  - IP-CIDR6,2620:fe::fe,no-resolve
+  - IP-CIDR6,2620:fe::9,no-resolve
+  - IP-CIDR6,2620:fe::11,no-resolve
+  - IP-CIDR6,2620:fe::fe:11,no-resolve
+  - IP-CIDR6,2620:fe::10,no-resolve
+  - IP-CIDR6,2620:fe::fe:10,no-resolve
