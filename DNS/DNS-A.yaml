@@ -1,0 +1,182 @@
+
+dns:
+  enable: true
+  ipv6: true
+  listen: :23453
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-range6: fdfe:dcba:9876::1/64
+  respect-rules: false
+  # fakeip模式，blacklist(黑名单)，whitelist(白名单)，rule(规则)
+  fake-ip-filter-mode: rule
+
+  # 解析DNS域名的DNS，纯IP，可为加密DNS
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+    - 114.114.114.114
+
+  # 解析节点域名的DNS
+  proxy-server-nameserver:
+    - quic://223.5.5.5:853#name-cert-verify=dns.alidns.com
+    - https://1.12.12.12/dns-query#name-cert-verify=doh.pub
+
+  # 指定解析此节点域名的DNS
+  proxy-server-nameserver-policy:
+    "+.iz2ze58f9krop9tgbc.org":
+      - 43.108.56.44
+    gsfastdisk.kklsedaf.cc:
+      - 43.108.56.44
+
+  # 指定解析此域名的DNS
+  nameserver-policy:
+    # 机场订阅
+    "+.gsysublink.*":
+      - quic://223.5.5.5:853#name-cert-verify=dns.alidns.com
+      - https://1.12.12.12/dns-query#name-cert-verify=doh.pub
+
+    # 规则更新
+    cdn.jsdelivr.net:
+      - quic://223.5.5.5:853#name-cert-verify=dns.alidns.com
+      - https://1.12.12.12/dns-query#name-cert-verify=doh.pub
+
+    # fastly.jsdelivr.net:
+    #   - quic://223.5.5.5:853#name-cert-verify=dns.alidns.com
+    #   - https://1.12.12.12/dns-query#name-cert-verify=doh.pub
+
+    # DNS检测
+    "+.netease.com":
+      - 'quic://9.9.9.9:853#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=dns.quad9.net'
+      # - quic://9.9.9.11:853#RULES
+      # - quic://149.112.112.11:853#RULES
+      # - quic://9.9.9.9:853#name-cert-verify=dns.quad9.net
+      # - quic://223.5.5.5:853#name-cert-verify=dns.alidns.com
+      # - 'https://[待确认IP]/dns-query#RULES'
+
+    # 自带
+    "rule-set:fakeipfilter_cn":
+      - 202.99.224.68#disable-qtype-65=true
+      - 202.99.224.67#disable-qtype-65=true
+      # - 192.168.50.72
+      # - quic://223.5.5.5:853#name-cert-verify=dns.alidns.com
+
+    "rule-set:fakeipfilter_ntp":
+      - quic://223.5.5.5:853#disable-qtype-65=true&name-cert-verify=dns.alidns.com
+      - quic://223.6.6.6:853#disable-qtype-65=true&name-cert-verify=dns.alidns.com
+      # - 192.168.50.72
+
+    "rule-set:fakeipfilter_!cn":
+      - 'quic://9.9.9.9:853#RULES&disable-qtype-65=true&name-cert-verify=dns.quad9.net'
+      - 'https://8.8.8.8/dns-query#RULES&disable-qtype-65=true&name-cert-verify=dns.google'
+      - 'https://1.1.1.1/dns-query#RULES&disable-qtype-65=true&name-cert-verify=cloudflare-dns.com'
+
+    "rule-set:广告拦截1,广告拦截2": rcode://success
+    "geosite:category-ads-all": rcode://success
+
+    "geosite:private,cn,apple@cn,microsoft@cn,steam@cn,bilibili,115,xunlei,ubuntu":
+      - 202.99.224.68#disable-qtype-65=true
+      - 202.99.224.67#disable-qtype-65=true
+      # - 192.168.50.72
+      # - quic://223.5.5.5:853#disable-qtype-65=true&name-cert-verify=dns.alidns.com
+      # - https://1.12.12.12/dns-query#disable-qtype-65=true&name-cert-verify=doh.pub
+
+  # 用于direct(直连)出口域名解析的DNS服务器
+  direct-nameserver:
+    - 202.99.224.68#disable-qtype-65=true
+    - 202.99.224.67#disable-qtype-65=true
+    # - 192.168.50.72
+    # - quic://223.5.5.5:853#name-cert-verify=dns.alidns.com
+
+  # 是否遵循 nameserver-policy 中设置的细致规则
+  direct-nameserver-follow-policy: true
+
+  # 默认DNS
+  nameserver:
+    - 'quic://9.9.9.9:853#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=dns.quad9.net'
+    - 'https://8.8.8.8/dns-query#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=dns.google'
+    - 'https://1.1.1.1/dns-query#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=cloudflare-dns.com'
+    #- 'https://dns.twnic.tw/dns-query#RULES'# 台湾
+    #- 'https://public.dns.iij.jp/dns-query#RULES' #日本
+    #- 'tls://jp01.dns4me.net#RULES'
+    #- 'https://dns.csaonline.de/dns-query#RULES' #德国
+    #- 'https://doh.xfinity.com/dns-query#RULES' #美国
+    #- https://dns.csaonline.de/dns-query #德国
+
+  # 备用DNS，填国外DNS
+  fallback:
+    - 'quic://9.9.9.9:853#RULES&name-cert-verify=dns.quad9.net'
+    - 'https://8.8.8.8/dns-query#RULES&name-cert-verify=dns.google'
+    - 'https://1.1.1.1/dns-query#RULES&name-cert-verify=cloudflare-dns.com'
+
+  # 使用fallback解析
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+
+  # fakeip过滤，当fake-ip-filter-mode为黑名单(blacklist)返回真实IP，
+  # 白名单(whitelist)返回fakeip，规则(rule)需单独配置规则
+  # 例如：GEOSITE,gfw,fake-ip
+  fake-ip-filter:
+    # 需真实IP
+    - RULE-SET,fakeipfilter_cn,real-ip
+    - RULE-SET,fakeipfilter_ntp,real-ip
+    - RULE-SET,fakeipfilter_!cn,real-ip
+
+    # 私有域名
+    - GEOSITE,private,real-ip
+
+    # 机场订阅
+    - DOMAIN-KEYWORD,gsysublink,real-ip
+
+    # 规则更新
+    - DOMAIN,cdn.jsdelivr.net,real-ip
+    - DOMAIN,fastly.jsdelivr.net,real-ip
+    - DOMAIN,raw.githubusercontent.com,real-ip
+
+    # 音乐
+    - DOMAIN,musicapi.taihe.com,real-ip
+    - DOMAIN,amobile.music.tc.qq.com,real-ip
+
+    # Apple Software Update Service
+    - DOMAIN,swquery.apple.com,real-ip
+
+    # AdGuard
+    - DOMAIN,adguardteam.github.io,real-ip
+    - DOMAIN,adrules.top,real-ip
+    - DOMAIN,anti-ad.net,real-ip
+    - DOMAIN,static.adtidy.org,real-ip
+
+    # T-mobile and Ultra Mobile wifi calling
+    - DOMAIN-SUFFIX,gppnetwork.org,real-ip
+
+    # DNS检测
+    # - DOMAIN-KEYWORD,netease,real-ip
+    - DOMAIN-KEYWORD,browserleaks,fake-ip
+
+    # 中国
+    - GEOSITE,cn,real-ip
+
+    # Apple中国
+    - GEOSITE,apple@cn,real-ip
+
+    # Microsoft中国
+    - GEOSITE,microsoft@cn,real-ip
+
+    # Steam中国
+    - GEOSITE,steam@cn,real-ip
+
+    # bilibili
+    - GEOSITE,bilibili,real-ip
+
+    # 115网盘
+    - GEOSITE,115,real-ip
+
+    # 迅雷
+    - GEOSITE,xunlei,real-ip
+
+    # Ubuntu
+    - GEOSITE,ubuntu,real-ip
+
+    # 长城防火墙屏蔽
+    - GEOSITE,gfw,fake-ip
+    - MATCH,fake-ip
