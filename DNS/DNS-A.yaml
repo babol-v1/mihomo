@@ -78,10 +78,10 @@ dns:
     "rule-set:fakeipfilter_!cn":
       - 'quic://9.9.9.9:853#RULES&disable-qtype-65=true&name-cert-verify=dns.quad9.net'
       - 'quic://149.112.112.112:853#RULES&disable-qtype-65=true&name-cert-verify=dns.quad9.net'
-      - 'https://8.8.8.8/dns-query#RULES&disable-qtype-65=true&name-cert-verify=dns.google'
-      - 'https://8.8.4.4/dns-query#RULES&disable-qtype-65=true&name-cert-verify=dns.google'
-      - 'https://1.1.1.1/dns-query#RULES&disable-qtype-65=true&name-cert-verify=cloudflare-dns.com'
-      - 'https://1.0.0.1/dns-query#RULES&disable-qtype-65=true&name-cert-verify=cloudflare-dns.com'
+      - 'https://8.8.8.8/dns-query#RULES&disable-qtype-65=true&name-cert-verify=dns.google&h3=true'
+      - 'https://8.8.4.4/dns-query#RULES&disable-qtype-65=true&name-cert-verify=dns.google&h3=true'
+      - 'https://1.1.1.1/dns-query#RULES&disable-qtype-65=true&name-cert-verify=cloudflare-dns.com&h3=true'
+      - 'https://1.0.0.1/dns-query#RULES&disable-qtype-65=true&name-cert-verify=cloudflare-dns.com&h3=true'
 
     "rule-set:广告拦截1,广告拦截2": rcode://success
     "geosite:category-ads-all": rcode://success
@@ -107,10 +107,10 @@ dns:
   nameserver:
     - 'quic://9.9.9.9:853#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=dns.quad9.net'
     - 'quic://149.112.112.112:853#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=dns.quad9.net'
-    - 'https://8.8.8.8/dns-query#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=dns.google'
-    - 'https://8.8.4.4/dns-query#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=dns.google'
-    - 'https://1.1.1.1/dns-query#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=cloudflare-dns.com'
-    - 'https://1.0.0.1/dns-query#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=cloudflare-dns.com'
+    - 'https://8.8.8.8/dns-query#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=dns.google&h3=true'
+    - 'https://8.8.4.4/dns-query#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=dns.google&h3=true'
+    - 'https://1.1.1.1/dns-query#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=cloudflare-dns.com&h3=true'
+    - 'https://1.0.0.1/dns-query#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=cloudflare-dns.com&h3=true'
 
     # 以下区域DNS原配置为注释状态，暂时保留
     # - 'https://dns.twnic.tw/dns-query#RULES'  # 台湾
@@ -125,10 +125,10 @@ dns:
   fallback:
     - 'quic://9.9.9.9:853#RULES&name-cert-verify=dns.quad9.net'
     - 'quic://149.112.112.112:853#RULES&name-cert-verify=dns.quad9.net'
-    - 'https://8.8.8.8/dns-query#RULES&name-cert-verify=dns.google'
-    - 'https://8.8.4.4/dns-query#RULES&name-cert-verify=dns.google'
-    - 'https://1.1.1.1/dns-query#RULES&name-cert-verify=cloudflare-dns.com'
-    - 'https://1.0.0.1/dns-query#RULES&name-cert-verify=cloudflare-dns.com'
+    - 'https://8.8.8.8/dns-query#RULES&name-cert-verify=dns.google&h3=true'
+    - 'https://8.8.4.4/dns-query#RULES&name-cert-verify=dns.google&h3=true'
+    - 'https://1.1.1.1/dns-query#RULES&name-cert-verify=cloudflare-dns.com&h3=true'
+    - 'https://1.0.0.1/dns-query#RULES&name-cert-verify=cloudflare-dns.com&h3=true'
 
   # 使用fallback解析
   fallback-filter:
