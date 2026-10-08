@@ -13,13 +13,18 @@ dns:
   # 解析DNS域名的DNS，纯IP，可为加密DNS
   default-nameserver:
     - 223.5.5.5
+    - 223.6.6.6
     - 119.29.29.29
+    - 119.28.28.28
     - 114.114.114.114
+    - 114.114.115.115
 
   # 解析节点域名的DNS
   proxy-server-nameserver:
     - quic://223.5.5.5:853#name-cert-verify=dns.alidns.com
+    - quic://223.6.6.6:853#name-cert-verify=dns.alidns.com
     - https://1.12.12.12/dns-query#name-cert-verify=doh.pub
+    - https://120.53.53.53/dns-query#name-cert-verify=doh.pub
 
   # 指定解析此节点域名的DNS
   proxy-server-nameserver-policy:
@@ -33,32 +38,37 @@ dns:
     # 机场订阅
     "+.gsysublink.*":
       - quic://223.5.5.5:853#name-cert-verify=dns.alidns.com
+      - quic://223.6.6.6:853#name-cert-verify=dns.alidns.com
       - https://1.12.12.12/dns-query#name-cert-verify=doh.pub
+      - https://120.53.53.53/dns-query#name-cert-verify=doh.pub
 
     # 规则更新
     cdn.jsdelivr.net:
       - quic://223.5.5.5:853#name-cert-verify=dns.alidns.com
+      - quic://223.6.6.6:853#name-cert-verify=dns.alidns.com
       - https://1.12.12.12/dns-query#name-cert-verify=doh.pub
+      - https://120.53.53.53/dns-query#name-cert-verify=doh.pub
 
     # fastly.jsdelivr.net:
-    #   - quic://223.5.5.5:853#name-cert-verify=dns.alidns.com
-    #   - https://1.12.12.12/dns-query#name-cert-verify=doh.pub
+    #   - quic://dns.alidns.com:853
+    #   - https://doh.pub/dns-query
 
     # DNS检测
     "+.netease.com":
       - 'quic://9.9.9.9:853#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=dns.quad9.net'
+      - 'quic://149.112.112.112:853#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=dns.quad9.net'
       # - quic://9.9.9.11:853#RULES
       # - quic://149.112.112.11:853#RULES
-      # - quic://9.9.9.9:853#name-cert-verify=dns.quad9.net
-      # - quic://223.5.5.5:853#name-cert-verify=dns.alidns.com
-      # - 'https://[待确认IP]/dns-query#RULES'
+      # - quic://dns.quad9.net:853
+      # - quic://dns.alidns.com:853
+      # - 'https://public.dns.iij.jp/dns-query#RULES'
 
     # 自带
     "rule-set:fakeipfilter_cn":
       - 202.99.224.68#disable-qtype-65=true
       - 202.99.224.67#disable-qtype-65=true
       # - 192.168.50.72
-      # - quic://223.5.5.5:853#name-cert-verify=dns.alidns.com
+      # - quic://dns.alidns.com:853
 
     "rule-set:fakeipfilter_ntp":
       - quic://223.5.5.5:853#disable-qtype-65=true&name-cert-verify=dns.alidns.com
@@ -67,8 +77,11 @@ dns:
 
     "rule-set:fakeipfilter_!cn":
       - 'quic://9.9.9.9:853#RULES&disable-qtype-65=true&name-cert-verify=dns.quad9.net'
+      - 'quic://149.112.112.112:853#RULES&disable-qtype-65=true&name-cert-verify=dns.quad9.net'
       - 'https://8.8.8.8/dns-query#RULES&disable-qtype-65=true&name-cert-verify=dns.google'
+      - 'https://8.8.4.4/dns-query#RULES&disable-qtype-65=true&name-cert-verify=dns.google'
       - 'https://1.1.1.1/dns-query#RULES&disable-qtype-65=true&name-cert-verify=cloudflare-dns.com'
+      - 'https://1.0.0.1/dns-query#RULES&disable-qtype-65=true&name-cert-verify=cloudflare-dns.com'
 
     "rule-set:广告拦截1,广告拦截2": rcode://success
     "geosite:category-ads-all": rcode://success
@@ -77,15 +90,15 @@ dns:
       - 202.99.224.68#disable-qtype-65=true
       - 202.99.224.67#disable-qtype-65=true
       # - 192.168.50.72
-      # - quic://223.5.5.5:853#disable-qtype-65=true&name-cert-verify=dns.alidns.com
-      # - https://1.12.12.12/dns-query#disable-qtype-65=true&name-cert-verify=doh.pub
+      # - quic://dns.alidns.com:853#disable-qtype-65=true
+      # - https://doh.pub/dns-query#disable-qtype-65=true
 
   # 用于direct(直连)出口域名解析的DNS服务器
   direct-nameserver:
     - 202.99.224.68#disable-qtype-65=true
     - 202.99.224.67#disable-qtype-65=true
     # - 192.168.50.72
-    # - quic://223.5.5.5:853#name-cert-verify=dns.alidns.com
+    # - quic://dns.alidns.com:853
 
   # 是否遵循 nameserver-policy 中设置的细致规则
   direct-nameserver-follow-policy: true
@@ -93,20 +106,29 @@ dns:
   # 默认DNS
   nameserver:
     - 'quic://9.9.9.9:853#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=dns.quad9.net'
+    - 'quic://149.112.112.112:853#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=dns.quad9.net'
     - 'https://8.8.8.8/dns-query#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=dns.google'
+    - 'https://8.8.4.4/dns-query#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=dns.google'
     - 'https://1.1.1.1/dns-query#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=cloudflare-dns.com'
-    #- 'https://dns.twnic.tw/dns-query#RULES'# 台湾
-    #- 'https://public.dns.iij.jp/dns-query#RULES' #日本
-    #- 'tls://jp01.dns4me.net#RULES'
-    #- 'https://dns.csaonline.de/dns-query#RULES' #德国
-    #- 'https://doh.xfinity.com/dns-query#RULES' #美国
-    #- https://dns.csaonline.de/dns-query #德国
+    - 'https://1.0.0.1/dns-query#RULES&ecs=1.25.0.0/16&ecs-override=true&name-cert-verify=cloudflare-dns.com'
+
+    # 以下区域DNS原配置为注释状态，暂时保留
+    # - 'https://dns.twnic.tw/dns-query#RULES'  # 台湾
+    # - 'https://public.dns.iij.jp/dns-query#RULES'  # 日本
+    # - 'tls://jp01.dns4me.net#RULES'
+    # - 'https://dns.csaonline.de/dns-query#RULES'  # 德国
+    # - 'https://doh.xfinity.com/dns-query#RULES'  # 美国
+    # - 'https://dns.csaonline.de/dns-query'  # 德国
+    # - 'tls://unfiltered.adguard-dns.com'
 
   # 备用DNS，填国外DNS
   fallback:
     - 'quic://9.9.9.9:853#RULES&name-cert-verify=dns.quad9.net'
+    - 'quic://149.112.112.112:853#RULES&name-cert-verify=dns.quad9.net'
     - 'https://8.8.8.8/dns-query#RULES&name-cert-verify=dns.google'
+    - 'https://8.8.4.4/dns-query#RULES&name-cert-verify=dns.google'
     - 'https://1.1.1.1/dns-query#RULES&name-cert-verify=cloudflare-dns.com'
+    - 'https://1.0.0.1/dns-query#RULES&name-cert-verify=cloudflare-dns.com'
 
   # 使用fallback解析
   fallback-filter:
